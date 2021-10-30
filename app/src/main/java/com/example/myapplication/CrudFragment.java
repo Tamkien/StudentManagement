@@ -23,6 +23,7 @@ public class CrudFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
+    private static final String ARG_PARAM5 = "param5";
 
     // TODO: Rename and change types of parameters
     private String name;
@@ -48,8 +49,8 @@ public class CrudFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, name);
         args.putString(ARG_PARAM2, address);
-        args.putString(ARG_PARAM3, address);
-        args.putString(ARG_PARAM4, address);
+        args.putString(ARG_PARAM3, birthday);
+        args.putString(ARG_PARAM4, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,15 +79,30 @@ public class CrudFragment extends Fragment {
             birthday = getArguments().getString(ARG_PARAM3);
             type = getArguments().getString(ARG_PARAM4);
         }
-        if (type.equals("add")) btnDelete.setVisibility(View.GONE);
         etName.setText(name);
         etAddress.setText(address);
         etBirthday.setText(birthday);
-        btnSave.setOnClickListener(v -> {
-            db.addPerson(new Person(etName.getText().toString(), etAddress.getText().toString(), etBirthday.getText().toString()));
-            Intent intent = new Intent(getContext(), MainActivity.class);
-            startActivity(intent);
-        });
+        if (type.equals("add")) {
+            btnDelete.setVisibility(View.GONE);
+            btnSave.setOnClickListener(v -> {
+                db.add(new Person(etName.getText().toString(), etAddress.getText().toString(), etBirthday.getText().toString()));
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+            });
+        } else {
+            btnDelete.setVisibility(View.VISIBLE);
+            btnSave.setOnClickListener(v -> {
+                db.update(new Person(etName.getText().toString(), etAddress.getText().toString(), etBirthday.getText().toString()));
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+            });
+            btnDelete.setOnClickListener(v->{
+                        db.delete(new Person(etName.getText().toString(), etAddress.getText().toString(), etBirthday.getText().toString()));
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    );
+        }
         return view;
     }
 }

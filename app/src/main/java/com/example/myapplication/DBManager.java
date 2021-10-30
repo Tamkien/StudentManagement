@@ -12,6 +12,7 @@ import java.util.List;
 public class DBManager extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "People";
+    private static final String ID = "id";
     private static final String NAME = "name";
     private static final String ADDRESS = "address";
     private static final String DOB = "dob";
@@ -25,7 +26,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Script to create table.
-        String script = "CREATE TABLE " + TABLE_NAME + "("
+        String script = "CREATE TABLE " + TABLE_NAME + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + NAME + " TEXT," + ADDRESS + " TEXT,"
                 + DOB + " TEXT" + ")";
         // Execute script.
@@ -43,7 +44,7 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPerson(Person person){
+    public void add(Person person){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -77,5 +78,27 @@ public class DBManager extends SQLiteOpenHelper {
         }
 
         return people;
+    }
+
+
+    public int update(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(NAME, person.getName());
+        values.put(ADDRESS, person.getAddress());
+        values.put(DOB, person.getBirthday());
+
+        // updating row
+        return db.update(TABLE_NAME, values, NAME + " = ?",
+                new String[]{String.valueOf(person.getName())});
+    }
+
+    public void delete(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, NAME + " = ?",
+                new String[] { String.valueOf(person.getName()) });
+        db.close();
     }
 }

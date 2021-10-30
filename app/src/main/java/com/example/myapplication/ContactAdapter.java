@@ -8,17 +8,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class ContactAdapter extends RecyclerView.Adapter {
     private final ArrayList<Person> items = new ArrayList<>();
+    private FragmentManager fragmentManager;
 
-    public ContactAdapter(final ArrayList<Person> i) {
+    public ContactAdapter(final ArrayList<Person> i, FragmentManager fragmentManager) {
         if (i != null) {
             this.items.addAll(i);
         }
+        this.fragmentManager = fragmentManager;
     }
 
 
@@ -51,7 +57,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
             tvAddress = view.findViewById(R.id.tvAddress);
             tvBirthday = view.findViewById(R.id.tvBirthday);
             view.setOnClickListener(v -> {
-//                openFragment(CrudFragment.newInstance("", "", "", "add"));
+                openFragment(CrudFragment.newInstance(tvName.getText().toString(), tvAddress.getText().toString(), tvBirthday.getText().toString(), "edit"));
             });
         }
 
@@ -60,13 +66,14 @@ public class ContactAdapter extends RecyclerView.Adapter {
             tvAddress.setText(person.getAddress());
             tvBirthday.setText(person.getBirthday());
         }
-        //open fragments
-//        private void openFragment(Fragment fragment) {
-//            FragmentManager fm = context.
-//            FragmentTransaction transaction = fm.beginTransaction();
-//            transaction.replace(R.id.fragment_container, fragment, "New Fragment");
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
+    }
+
+    //open fragments
+    private void openFragment(Fragment fragment) {
+        FragmentManager fm = fragmentManager;
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment, "New Fragment");
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

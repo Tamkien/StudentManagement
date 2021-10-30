@@ -13,22 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        DBManager db = new DBManager(this);
-        RecyclerView rvContact = findViewById(R.id.rvContact);
-        rvContact.setAdapter(new ContactAdapter(db.getAll()));
-        rvContact.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnAdd = findViewById(R.id.btnAdd);
+        DBManager db = new DBManager(this);
         btnAdd.setOnClickListener(v -> {
             openFragment(CrudFragment.newInstance("", "", "", "add"));
         });
+        RecyclerView rvContact = findViewById(R.id.rvContact);
+        rvContact.setAdapter(new ContactAdapter(db.getAll(), getSupportFragmentManager()));
+        rvContact.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     //open fragments
