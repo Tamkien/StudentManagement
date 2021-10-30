@@ -51,7 +51,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
             tvAddress = view.findViewById(R.id.tvAddress);
             tvBirthday = view.findViewById(R.id.tvBirthday);
             view.setOnClickListener(v -> {
-                openFragment(CrudFragment.newInstance("", "", "", "add"));
+//                openFragment(CrudFragment.newInstance("", "", "", "add"));
             });
         }
 
