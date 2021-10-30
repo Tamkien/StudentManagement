@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.hoangkimduc;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
