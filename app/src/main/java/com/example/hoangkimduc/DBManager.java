@@ -16,7 +16,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String ADDRESS = "address";
     private static final String DOB = "dob";
 
-    public DBManager(Context context)  {
+    public DBManager(Context context) {
         super(context, "Contact", null, 1);
     }
 
@@ -43,7 +43,7 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void add(Person person){
+    public void add(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -59,7 +59,7 @@ public class DBManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<Person> getAll(){
+    public ArrayList<Person> getAll() {
         ArrayList<Person> people = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -97,7 +97,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void delete(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, NAME + " = ?",
-                new String[] { String.valueOf(person.getName()) });
+                new String[]{String.valueOf(person.getName())});
         db.close();
     }
 }

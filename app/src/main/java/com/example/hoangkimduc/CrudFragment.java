@@ -25,7 +25,6 @@ public class CrudFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
-    private static final String ARG_PARAM5 = "param5";
 
     // TODO: Rename and change types of parameters
     private String name;
@@ -98,12 +97,12 @@ public class CrudFragment extends Fragment {
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             });
-            btnDelete.setOnClickListener(v->{
+            btnDelete.setOnClickListener(v -> {
                         db.delete(new Person(etName.getText().toString(), etAddress.getText().toString(), etBirthday.getText().toString()));
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
                     }
-                    );
+            );
         }
         return view;
     }
